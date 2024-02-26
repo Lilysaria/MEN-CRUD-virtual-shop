@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Little Shop</title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-  <header style="background-color: #003366; padding: 10px 0; color: white;">
-    <div style="max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center;">
-      <h1 style="margin-left: 20px;"><a href="/" style="color: #ADD8E6; text-decoration: none;">The shop</a></h1>
-      <nav>
-        <ul style="list-style: none; display: flex; margin-right: 20px;">
-          <li style="margin: 0 10px;"><a href="/products" style="color: #ADD8E6; text-decoration: none;">View Products</a></li>
-          <li style="margin: 0 10px;"><a href="/products/new" style="color: #ADD8E6; text-decoration: none;">Add Product</a></li>
-          
-        </ul>
-      </nav>
-    </div>
-  </header>
+<nav>
+  <img src="/images/camera.svg">
+  <a href="/products">ALL products</a>
+  <% if (user) { %>
+    <a href="/products/new"	>
+		ADD PERFORMER</a>
+    <a href="/products/new" >ADD products</a>
+    <a href="/logout">LOG OUT</a>
+  <% } else { %>
+    <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+  <% } %>
+</nav>
