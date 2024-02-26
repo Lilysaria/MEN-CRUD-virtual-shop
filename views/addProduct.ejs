@@ -1,0 +1,20 @@
+<% var isEdit = typeof product !== 'undefined' && product && product._id; %>
+<h1><%= isEdit ? 'Edit' : 'Add' %> Product</h1>
+<form action="<%= isEdit ? '/products/' + product._id : '/products' %>" method="POST">
+  <% if(isEdit) { %>
+    <input type="hidden" name="_method" value="PUT" />
+  <% } %>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" value="<%= isEdit ? product.name : '' %>" required>
+  
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description" value="<%= isEdit ? product.description : '' %>" required>
+  
+  <label for="price">Price:</label>
+  <input type="number" id="price" name="price" step="0.01" value="<%= isEdit ? product.price : '' %>" required>
+  
+  <label for="imageUrl">Image URL:</label>
+  <input type="text" id="imageUrl" name="imageUrl" value="<%= isEdit ? product.imageUrl : '' %>" required>
+  
+  <button type="submit"><%= isEdit ? 'Update' : 'Add' %> Product</button>
+</form>
