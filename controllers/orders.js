@@ -9,39 +9,55 @@ module.exports = {
 
 
 async function addToCart(req, res) {
-    const Product = require('../models/Product');
-
     try {
         // get productId and quantity from request body
         const { productId, quantity } = req.body;
 
-        // the cart in session if it doesn't exist
-        if (!req.session.cart) {
-            req.session.cart = { items: [] };
-        }
-
-        // Find the product 
+        // find the product 
         const product = await Product.findById(productId);
         if (!product) {
-            return res.status(404).send('product not found');
+            return res.status(404).send('Product not found');
+        }
+
+        // Find or create the users cart in the database
+        let cart;
+        if (req.user) {
+            // user is logged in, use their _id
+            cart = await Order.findOne({ userId: req.user._id, status: 'cart' });
+        } else {
+            // user not logged in, use a default value for userId
+            cart = await Order.findOne({ userId: null, status: 'cart' });
+        }
+
+        if (!cart) {
+            // if cart doesn't exist, create a new one
+            cart = new Order({ userId: req.user ? req.user._id : null, status: 'cart', products: [] });
         }
 
         // add or update the product in the cart
-        const existingProductIndex = req.session.cart.items.findIndex(item => item.productId === productId);
-        if (existingProductIndex > -1) {
+        const productIndex = cart.products.findIndex(item => item.productId.toString() === productId);
+        if (productIndex > -1) {
             // product exists in cart, update quantity
-            req.session.cart.items[existingProductIndex].quantity += quantity;
+            cart.products[productIndex].quantity += quantity;
         } else {
-            // product does not exist in cart, add new item
-            req.session.cart.items.push({ productId, quantity, price: product.price });
+            // add to cart
+            cart.products.push({ productId, quantity, price: product.price });
         }
 
         // calculate total price for the cart
-        req.session.cart.totalPrice = req.session.cart.items.reduce((total, item) => total + (item.quantity * item.price), 0);
+        cart.totalPrice = cart.products.reduce((total, item) => total + (item.quantity * item.price), 0);
 
-        res.status(200).json(req.session.cart);
+        // save the cart to the database
+        await cart.save();
+
+        // redirect or send response
+        res.status(200).json(cart);
     } catch (error) {
-        console.error('error adding to cart:', error);
+        console.error('Error adding to cart:', error);
         res.status(500).send(error.message);
     }
 }
+/* 
+exports.viewCart = async (req, res) => {
+    try { productID , Quantity, Price
+         */
