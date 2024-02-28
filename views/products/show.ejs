@@ -2,4 +2,14 @@
 <p><%= product.description %></p>
 <p>Price: $<%= product.price.toFixed(2) %></p>
 <img src="<%= product.imageUrl %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
+
+
+<!--cart -->
+<form action="/orders/cart/add" method="POST">
+    <input type="hidden" name="productId" value="<%= product._id %>">
+    <input type="number" name="quantity" value="1" min="1">
+    <button type="submit">Add to Cart</button>
+  </form>
+
+
 <a href="/products">Back to Products</a>

@@ -1,20 +1,82 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
 <head>
     <title>Homepage</title>
     <style>
-        body { background-color: #003366; color: white; } 
-        a { color: #ADD8E6; } 
+         body {
+            background-color: #1660aa;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header, footer {
+            background-color: #002244;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        a {
+            color: #ADD8E6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <%- include('./partials/header') %> 
-    <h1>Welcome to The cool shop</h1>
-    <nav>
-        <ul>
-            <p> ui /ux designs here </p>
-        </ul>
-    </nav>
-    <%- include('./partials/footer') %> 
+    <%- include('./partials/header') %>
+    <main>
+        <div class="content">
+            <h1>Welcome to The Cool Shop</h1>
+            <nav>
+                <ul>
+                    <li><a href="/products">Shop Now</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+            <p>Explore our favorites</p>
+        </div>
+    </main>
+    <%- include('./partials/footer') %>
 </body>
 </html>

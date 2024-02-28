@@ -10,6 +10,7 @@ const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const productRouter = require('./routes/products');
+const ordersRouter = require('./routes/orders');
 
 
 const app = express();
@@ -59,6 +60,7 @@ app.use(function(req, res, next){
 
 app.use('/', indexRouter);
 app.use('/products', productRouter);
+app.use('/orders', ordersRouter);
 // related resources are mounted at /
 // because there is not consitent naming convention
 
