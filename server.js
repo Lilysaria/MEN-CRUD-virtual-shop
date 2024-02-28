@@ -58,7 +58,7 @@ app.use(function(req, res, next){
 
 
 app.use('/', indexRouter);
-app.use('/', indexRouter);
+app.use('/products', productRouter);
 // related resources are mounted at /
 // because there is not consitent naming convention
 
