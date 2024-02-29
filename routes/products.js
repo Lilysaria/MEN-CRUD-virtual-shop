@@ -17,4 +17,6 @@ router.get('/:productId/edit', products.showEditProductForm);
 
 router.put('/:productId', products.updateProduct);
 
+router.delete('/:productId', products.deleteProduct);
+
 module.exports = router;

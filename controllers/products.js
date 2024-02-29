@@ -6,7 +6,8 @@ module.exports = {
   listProducts,
   viewProduct,
   showEditProductForm,
-  updateProduct
+  updateProduct,
+  deleteProduct
 };
 
 // display form for adding a new product | CRUD: Create (Form Display)
@@ -68,22 +69,30 @@ async function showEditProductForm(req, res) {
 
 async function updateProduct(req, res) {
   try {
-    const product = await Product.findById(req.params.productId);
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.productId, req.body, { new: true, runValidators: true });
 
-    if (!product) {
+    if (!updatedProduct) {
       return res.status(404).send('Product not found');
     }
 
-    // update the product with new values from req.body
-    product.set(req.body);
-
-    // save the updated product
-    await product.save();
-
     // redirect
-    res.redirect(`/products/${product._id}`);
+    res.redirect(`/products/${updatedProduct._id}`);
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).send(error);
+  }
+}
+
+async function deleteProduct(req, res) {
+  try {
+    console.log('delete product with ID:', req.params.productId);
+    // attempt to delete the product by ID
+    await Product.findOneAndDelete(req.params.productId);
+    console.log(' deleted successfully');
+    // redirect to the products listing page
+    res.redirect('/products');
+  } catch (err) {
+    console.error('Error deleting product:', err);
+    res.status(500).send(err);
   }
 }
