@@ -2,8 +2,8 @@ const Order = require('../models/order');
 const Product = require('../models/Product');
 
 module.exports = { 
-    addToCart
-   
+    addToCart,
+   viewCart
   
 };
 
@@ -11,9 +11,11 @@ module.exports = {
 async function addToCart(req, res) {
     try {
         // get productId and quantity from request body
+        //equivalent to const productId = req.body.productId const quantity = req.body.quantity
         const { productId, quantity } = req.body;
 
-        // find the product 
+        // find the product using Product model
+        //Product.findById(productId) is an async operation that searches databse for productId
         const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).send('Product not found');
@@ -51,13 +53,28 @@ async function addToCart(req, res) {
         await cart.save();
 
         // redirect or send response
-        res.status(200).json(cart);
+        res.redirect("/orders/cart")
     } catch (error) {
         console.error('Error adding to cart:', error);
         res.status(500).send(error.message);
     }
 }
-/* 
-exports.viewCart = async (req, res) => {
-    try { productID , Quantity, Price
-         */
+ 
+async function viewCart(req, res) {
+    try {
+        
+        const userId = req.user ? req.user._id : null; 
+        const cart = await Order.findOne({ userId, status: 'cart' }).populate('products.productId');
+
+        if (!cart) {
+          
+            return res.render('products/empty-cart');
+        }
+
+        // render the cart view with cart data
+        res.render('products/cart', { cart });
+    } catch (error) {
+        console.error('Error viewing cart:', error);
+        res.status(500).send("Error viewing cart");
+    }
+}

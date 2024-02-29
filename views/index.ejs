@@ -1,80 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<html>
-<head>
-    <title>Homepage</title>
-    <style>
-         body {
-            background-color: #1660aa;
-            color: white;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        header, footer {
-            background-color: #002244;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2rem;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-
-        a {
-            color: #ADD8E6;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .content {
-            text-align: center;
-        }
-    </style>
-</head>
+<link rel='stylesheet' href='/stylesheets/style.css' />
 <body>
     <%- include('./partials/header') %>
     <main>
+        <img src="https://res.cloudinary.com/dgtqptpu1/image/upload/v1709192062/bob-canning-r53rNKb_7s8-unsplash_w6vl5z.jpg" alt="Cover Photo" class="cover-photo">
         <div class="content">
-            <h1>Welcome to The Cool Shop</h1>
-            <nav>
-                <ul>
-                    <li><a href="/products">Shop Now</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
-            <p>Explore our favorites</p>
+            <h1>Winter hat Shop</h1>
+            <p>Explore winter hats</p>
         </div>
     </main>
     <%- include('./partials/footer') %>
