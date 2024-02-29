@@ -8,6 +8,11 @@ var app = require('../server');
 var debug = require('debug')('mongoose-movies:server');
 var http = require('http');
 
+
+// import connectDB function and makes it a variable
+const { connectDB } = require("../config/database");
+
+
 /**
  * Get port from environment and store in Express.
  */
@@ -21,13 +26,16 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+
+connectDB().then(() => {
+ 
+  server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+
+  
+});
 
 /**
  * Normalize a port into a number, string, or false.

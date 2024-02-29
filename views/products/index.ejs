@@ -1,22 +1,23 @@
-
-
 <link rel='stylesheet' href='/stylesheets/style.css' />
 <main style="padding: 20px;">
   <h1>Product List</h1>
-  <a href="/products/new">Add New Product</a>
-  <ul> <!--// Loop through each product in the 'products' array -->
+  <% if (user) { %> <!-- heck if logged in -->
+    <a href="/products/new">Add New Product</a> <!-- show if logged in -->
+  <% } %>
+  <ul>
     <% products.forEach(function(product) { %>
       <li>
-        <img src="<%= product.imageUrl %>" alt="<%= product.name %>" style="width: 100px; height: auto;"> <!-- Image display -->
-        <%= product.name %> - <%= product.price %> //display product name and price
+        <img src="<%= product.imageUrl %>" alt="<%= product.name %>" style="width: 100px; height: auto;">
+        <%= product.name %> - <%= product.price %>
         <a href="/products/<%= product._id %>">View</a>
-        <a href="/products/<%= product._id %>/edit">Edit</a> <!-- links to edit page form-->
-        <form action="/products/<%= product._id %>?_method=DELETE" method="POST" style="display: inline;">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" onclick="return confirm('Are you sure ?');">Delete</button>
-        </form>
+        <% if (user) { %> 
+          <a href="/products/<%= product._id %>/edit">Edit</a> <!-- only show if logged in -->
+          <form action="/products/<%= product._id %>?_method=DELETE" method="POST" style="display: inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" onclick="return confirm('Are you sure ?');">Delete</button>
+          </form>
+        <% } %>
       </li>
     <% }); %>
   </ul>
-  </main>
-  
+</main>
